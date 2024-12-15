@@ -6,7 +6,7 @@ const createShipping  = async(req, res)=>{
             "error": "All fields required"
           })
     }
-    const created = await prisma.shipping.create({data: {userId, productId, count}})
+    const created = await prisma.shipping.create({data: {userId:parseInt(userId), productId:parseInt(userId), count}})
     return res.status(201).json(created)
 }
 
@@ -17,7 +17,7 @@ const cancelShipping = async(req, res)=>{
             "error": "Missing shippingId", 
           })
     }
-    const updated = await prisma.shipping.update({where: {id:shippingId}, data: {status: "cancelled"}})
+    const updated = await prisma.shipping.update({where: {id:parseInt(shippingId)}, data: {status: "cancelled"}})
     return res.status(200).json(updated)
 }
 
@@ -27,7 +27,7 @@ const getShipping = async(req, res)=>{
         const shippings = await prisma.shipping.findMany()
         return res.status(200).json(shippings)
     }else{
-        const ship = await prisma.shipping.findMany({where: {userId: userId}})
+        const ship = await prisma.shipping.findMany({where: {userId: parseInt(userId)}})
         return res.status(200).json(ship)
     }
 }
